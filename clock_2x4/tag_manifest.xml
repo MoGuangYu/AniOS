@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Clock frameRate="30" screenWidth="1080" type="awesome" useVariableUpdater="DateTime.Day" version="1">
+	<Var expression="ifelse(#applied_light_wallpaper,&apos;#99000000&apos;,&apos;#ffffffff&apos;)" name="color_c" type="string"/>
+	<VariableBinders>
+		<ContentProviderBinder columns="city_name,temperature,weather_type,wind,humidity,publish_time,weathernamesfrom,weathernamesto,tmplows,tmphighs" countName="hasweather" name="WeatherProvider" uri="content://weather/actualWeatherData/1">
+			<Variable column="city_name" name="xfClockWeatherMusic_city" type="string"/>
+			<Variable column="description" name="xfClockWeatherMusic_description" type="string"/>
+			<Variable column="temperature" name="xfClockWeatherMusic_temperature" type="int"/>
+			<Variable column="temperature" name="xfClockWeatherMusic_temperature" type="string"/>
+			<Variable column="weather_type" name="xfClockWeatherMusic_id" type="int"/>
+			<Variable column="weather_type" name="DefaultLockScreen_weather_type" type="string[]"/>
+			<Variable column="tmphighs" name="DefaultLockScreen_weather_temphigh" type="string[]"/>
+			<Variable column="tmplows" name="DefaultLockScreen_weather_templow" type="string[]"/>
+			<Variable column="wind" name="DefaultLockScreen_weather_wind" type="string"/>
+			<Variable column="aqilevel" name="DefaultLockScreen_weather_aqi" type="int"/>
+			<Trigger>
+				<VariableCommand expression="ifelse(#DefaultLockScreen_weather_aqi }= 0 ** #DefaultLockScreen_weather_aqi {= 50,&apos;空气优&apos;,#DefaultLockScreen_weather_aqi}50 ** #DefaultLockScreen_weather_aqi {= 100,&apos;空气良好&apos;,#DefaultLockScreen_weather_aqi}100 ** #DefaultLockScreen_weather_aqi {= 150,&apos;轻度污染&apos;,#DefaultLockScreen_weather_aqi}150 ** #DefaultLockScreen_weather_aqi {= 200,&apos;中度污染&apos;,#DefaultLockScreen_weather_aqi}200 ** #DefaultLockScreen_weather_aqi {= 300,&apos;重度污染&apos;,#DefaultLockScreen_weather_aqi}300,&apos;严重污染&apos;,&apos;信息异常&apos;)" name="DefaultLockScreen_weather_air_quality" type="string"/>
+				<VariableCommand expression="ifelse(#xfClockWeatherMusic_id}25||#xfClockWeatherMusic_id{0,0, (#xfClockWeatherMusic_id}=4**#xfClockWeatherMusic_id{=6||#xfClockWeatherMusic_id}=8**#xfClockWeatherMusic_id{=11||#xfClockWeatherMusic_id==25),4,#xfClockWeatherMusic_id}=13**#xfClockWeatherMusic_id{=17,13 ,#xfClockWeatherMusic_id}=18**#xfClockWeatherMusic_id{=21||#xfClockWeatherMusic_id==23,18,#xfClockWeatherMusic_id)" name="xfClockWeatherMusic_iconId"/>
+			</Trigger>
+		</ContentProviderBinder>
+	</VariableBinders>
+	<ExternalCommands>
+		<Trigger action="init,resume">
+			<BinderCommand command="refresh" delay="10" name="WeatherProvider"/>
+		</Trigger>
+	</ExternalCommands>
+	<Button h="0" name="clock_button" w="0" x="0" y="0"/>
+	<Group h="#view_height" layered="true" w="#view_width" x="0" y="0">
+		<Time centerY="#time.bmp_height/2" name="time" scale="0.75" space="10" src="n/n.png" x="#view_width/2-480" y="#view_height/2-200" alignV="center" visibility="!#button_4"/>
+		<Image alignV="center" src="dw.png" x="#view_width/2-480" y="#view_height/2+170" visibility="!strIsEmpty(@xfClockWeatherMusic_city)"/>
+		<Rectangle align="center" cornerRadius="0,0" fillColor="@color_c" h="#view_height" w="#view_width" x="#view_width/2" xfermode="src_in" y="0"/>
+	</Group>
+	<DateTime x="#view_width/2-480" y="#view_height/2-205" alignV="center" size="140" color="@color_c" formatExp="ifelse(#time_format,'HH:mm','hh:mm')" fontFamily="mitype-normal" visibility="#button_4" />
+	<DateTime x="#view_width/2+480" y="#view_height/2-235" align="right" alignV="center" format="M月d日 E aa" size="36" color="@color_c"/>
+	<DateTime x="#view_width/2+480" y="#view_height/2-165" align="right" alignV="center" format="NNNN" size="36" color="@color_c" marqueeSpeed="40"/>
+	<Rectangle x="#view_width/2-426" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+	<DateTime x="#view_width/2-426" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys-259200000"/>
+	<DateTime x="#view_width/2-426" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys-259200000"/>
+	<Rectangle x="#view_width/2-284" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+
+	<DateTime x="#view_width/2-284" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys-172800000"/>
+	<DateTime x="#view_width/2-284" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys-172800000"/>
+	<Rectangle x="#view_width/2-142" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+	<DateTime x="#view_width/2-142" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys-86400000"/>
+	<DateTime x="#view_width/2-142" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys-86400000"/>
+	
+	<Rectangle x="#view_width/2" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="40" cornerRadius="30,30" w="122" h="304-162*strIsEmpty(@xfClockWeatherMusic_city)"/>
+	<DateTime x="#view_width/2" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys"/>
+	<DateTime x="#view_width/2" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys"/>
+	<Rectangle x="#view_width/2+142" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+	<DateTime x="#view_width/2+142" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys+86400000"/>
+	<DateTime x="#view_width/2+142" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys+86400000"/>
+	<Rectangle x="#view_width/2+284" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+
+	<DateTime x="#view_width/2+284" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys+172800000"/>
+	<DateTime x="#view_width/2+284" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys+172800000"/>
+	<Rectangle x="#view_width/2+426" y="#view_height/2-100" align="center" strokeColor="#00000000" weight="2" fillColor="@color_c" alpha="15" cornerRadius="30,30" w="122" h="142"/>
+	<DateTime x="#view_width/2+426" y="#view_height/2-100" align="center" color="@color_c" size="66" format="d" value="#time_sys+259200000"/>
+	<DateTime x="#view_width/2+426" y="#view_height/2-10" align="center" color="@color_c" size="30" format="E" value="#time_sys+259200000"/>
+	<Group visibility="!strIsEmpty(@xfClockWeatherMusic_city)">
+		<!-- 今日天气 -->
+		<Text alignV="center" color="@color_c" size="36" textExp="@DefaultLockScreen_weather_wind+' '+@DefaultLockScreen_weather_air_quality" x="#view_width/2-480" y="#view_height/2+100" marqueeSpeed="50" w="410"/>
+		<Text alignV="center" color="@color_c" size="36" textExp="@xfClockWeatherMusic_city+'  '+@xfClockWeatherMusic_description" x="#view_width/2-440" y="#view_height/2+170" marqueeSpeed="50" w="370" />
+		<Image align="center" alignV="center" src="ToolsScreen_src/weather/weather.png" srcid="#xfClockWeatherMusic_iconId" w="80" h="80" x="#view_width/2" y="#view_height/2+100"/>
+		<Text align="center" alignV="center" color="@color_c" name="ClockNumClock_degree" size="36" textExp="@xfClockWeatherMusic_temperature" x="#view_width/2" y="#view_height/2+170"/>
+		<!-- 未来几天天气 -->
+		<Array count="3" indexName="__i" visibility="#DefaultLockScreen_weather_info == 0">
+			<Image align="center" alignV="center" h="80" src="ToolsScreen_src/weather/weather.png" srcid="ifelse(int(@DefaultLockScreen_weather_type[#__i+1])}25 || int(@DefaultLockScreen_weather_type[#__i+1]){0,0, (int(@DefaultLockScreen_weather_type[#__i+1]) }= 4 ** int(@DefaultLockScreen_weather_type[#__i+1]) {= 6 || int(@DefaultLockScreen_weather_type[#__i+1]) }= 8 ** int(@DefaultLockScreen_weather_type[#__i+1]) {= 11 || int(@DefaultLockScreen_weather_type[#__i+1]) == 25),4,int(@DefaultLockScreen_weather_type[#__i+1]) }= 13 ** int(@DefaultLockScreen_weather_type[#__i+1]) {= 17,13 ,int(@DefaultLockScreen_weather_type[#__i+1]) }= 18 ** int(@DefaultLockScreen_weather_type[#__i+1]) {= 21 || int(@DefaultLockScreen_weather_type[#__i+1]) == 23,18,@DefaultLockScreen_weather_type[#__i+1])" w="80" x="#view_width/2+142+142*#__i" y="#view_height/2+100"/>
+			<Text align="center" alignV="center" color="@color_c" size="32-4*gt(len(@DefaultLockScreen_weather_templow[#__i+1]+&apos;°/&apos;+@DefaultLockScreen_weather_temphigh[#__i+1]+&apos;°&apos;),7)" name="txt" textExp="@DefaultLockScreen_weather_templow[#__i+1]+&apos;°/&apos;+@DefaultLockScreen_weather_temphigh[#__i+1]+&apos;°&apos;" x="#view_width/2+142+142*#__i" y="#view_height/2+170"/>
+		</Array>
+	</Group>
+	<Button w="380" h="160" x="#view_width/2-480" y="#view_height/2-200" alignV="center">
+		<Triggers>
+			<Trigger action="up">
+				<IntentCommand action="android.intent.action.MAIN" class="com.android.deskclock.DeskClockTabActivity" package="com.android.deskclock"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+	<Button w="340" h="140" x="#view_width/2+480" y="#view_height/2-200" align="right" alignV="center">
+		<Triggers>
+			<Trigger action="up">
+				<IntentCommand action="android.intent.action.MAIN" class="com.android.calendar.AllInOneActivity" package="com.android.calendar"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+	<Button w="#view_width-40" h="150" x="#view_width/2" y="#view_height/2-110" align="center">
+		<Triggers>
+			<Trigger action="up">
+				<IntentCommand action="android.intent.action.MAIN" class="com.android.calendar.AllInOneActivity" package="com.android.calendar"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+	<Button w="#view_width-40" h="150" x="#view_width/2" y="#view_height/2+50" align="center">
+		<Triggers>
+			<Trigger action="up">
+				<IntentCommand action="android.intent.action.MAIN" class="com.miui.weather2.ActivityWeatherMain" package="com.miui.weather2"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+	<Button align="center" alignV="center" x="#view_width/2" y="#view_height/2-200" w="130" h="130">
+		<Triggers>
+			<Trigger action="double">
+				<VariableCommand name="button_4" expression="not(#button_4)" persist="true"/>
+			</Trigger>
+		</Triggers>
+	</Button>
+</Clock>
